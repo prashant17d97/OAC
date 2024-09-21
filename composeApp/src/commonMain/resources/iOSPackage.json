@@ -1,0 +1,17 @@
+{
+    "apps": [
+        {
+            "package": "com.apple.mobilesafari",
+            "buttons": [
+                {
+                    "text": "Launch",
+                    "action": ""
+                },
+                {
+                    "text": "Environment",
+                    "action": "environment"
+                }
+            ]
+        }
+    ]
+}

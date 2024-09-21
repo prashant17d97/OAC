@@ -1,0 +1,64 @@
+{
+  "apps": [
+    {
+      "package": "com.android.chrome",
+      "buttons": [
+        {
+          "text": "Launch",
+          "action": ""
+        },
+        {
+          "text": "Environment",
+          "action": "environment"
+        }
+      ]
+    },
+    {
+      "package": "com.ob.bclccasino.internal",
+      "buttons": [
+        {
+          "text": "Launch",
+          "action": ""
+        },
+        {
+          "text": "Environment",
+          "action": "environment"
+        },
+        {
+          "text": "Config",
+          "action": "config"
+        }
+      ]
+    },
+    {
+      "package": "com.ob.bclccasino.external",
+      "buttons": [
+        {
+          "text": "Launch",
+          "action": ""
+        },
+        {
+          "text": "Environment",
+          "action": "environment"
+        },
+        {
+          "text": "Config",
+          "action": "config"
+        }
+      ]
+    },
+    {
+      "package": "com.ob.bclc.internal",
+      "buttons": [
+        {
+          "text": "Launch",
+          "action": ""
+        },
+        {
+          "text": "Environment",
+          "action": "environment"
+        }
+      ]
+    }
+  ]
+}
