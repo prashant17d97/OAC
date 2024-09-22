@@ -68,14 +68,28 @@ class DataStoreRepositoryImpl(private val oacDataStore: OacDataStore) : DataStor
 
     override suspend fun fetchAllApp(appPackages: List<AppDetails>) {
         val appAppearanceString = oacDataStore.getString(APP_PACKAGES).firstOrNull()
-        val savedAppDetails = if (!appAppearanceString.isNullOrEmpty()) {
-            parseSavedAppJson(appAppearanceString)?.mapNotNull { getAppDetails(it) } ?: emptyList()
-        } else {
-            emptyList()
-        }
-        val allAppDetails = (savedAppDetails + appPackages).sortedBy { it.name }
+        println("DataStoreRepositoryImpl, fetchAllApp: $appAppearanceString")
+        // Parse saved apps and map to AppDetails, or use an empty list if not present
+        val savedAppDetails = appAppearanceString?.let {
+            parseSavedAppJson(it)?.mapNotNull { appDetails->getAppDetails(appDetails) } ?: emptyList()
+        } ?: emptyList()
+
+        // Use a LinkedHashMap to avoid duplicates while preserving order
+        val appMap = linkedMapOf<String, AppDetails>()
+
+        // First, add saved apps to the map (keyed by packageName to avoid duplicates)
+        savedAppDetails.forEach { appMap[it.packageName] = it }
+
+        // Then, add new apps (overwrite if they already exist in the map)
+        appPackages.forEach { appMap[it.packageName] = it }
+
+        // Convert map values to a list and sort by name
+        val allAppDetails = appMap.values.sortedBy { it.name }
+
+        // Emit the updated list
         _apps.tryEmit(allAppDetails)
     }
+
 
     override suspend fun deleteApp(app: App) {
         val isAppAvailable = apps.value.any { it.packageName == app.packageName }

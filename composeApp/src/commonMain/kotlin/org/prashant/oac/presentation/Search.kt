@@ -132,8 +132,10 @@ fun Search(
                         enter = slideInHorizontally { it },
                         exit = slideOutHorizontally { it }) {
                         IconButton(onClick = {
-                            searchResult = appDetails.findApp()
-                            active = false
+                            if (text.isEmpty()) {
+                                searchResult = appDetails.findApp()
+                                active = false
+                            }
                             text = ""
                         }) {
                             Icon(Icons.Rounded.Close, contentDescription = null)
@@ -151,6 +153,7 @@ fun Search(
                             name = app.name,
                             icon = app.icon
                         ) {
+                            active = false
                             text = app.name
                             searchResult = appDetails.findApp(app.name).ifEmpty {
                                 dockList.findApp(app.packageName)
