@@ -102,7 +102,7 @@ private fun NavigationGraphContainer(
                                 )
                             }
                             Text(
-                                text = "OB App Controller",
+                                text = "App Launcher",
                                 style = MaterialTheme.typography.titleLarge,
                             )
                         }

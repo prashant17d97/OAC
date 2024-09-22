@@ -70,9 +70,15 @@ class DataStoreRepositoryImpl(private val oacDataStore: OacDataStore) : DataStor
         val appAppearanceString = oacDataStore.getString(APP_PACKAGES).firstOrNull()
         println("DataStoreRepositoryImpl, fetchAllApp: $appAppearanceString")
         // Parse saved apps and map to AppDetails, or use an empty list if not present
-        val savedAppDetails = appAppearanceString?.let {
-            parseSavedAppJson(it)?.mapNotNull { appDetails->getAppDetails(appDetails) } ?: emptyList()
-        } ?: emptyList()
+        val savedAppDetails = if (!appAppearanceString.isNullOrEmpty()) {
+            parseSavedAppJson(appAppearanceString)?.mapNotNull { appDetails ->
+                getAppDetails(
+                    appDetails
+                )
+            } ?: emptyList()
+        } else {
+            emptyList()
+        }
 
         // Use a LinkedHashMap to avoid duplicates while preserving order
         val appMap = linkedMapOf<String, AppDetails>()
